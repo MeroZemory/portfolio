@@ -33,7 +33,7 @@
 | **백엔드** | Node.js, Express, TypeScript, ASP.NET Core MVC, FastAPI, GraphQL, Discord.js, RESTful API |
 | **프론트엔드** | React, Flutter |
 | **AI/ML** | PyTorch (시계열 모델), LangChain, RAG, FAISS |
-| **데이터베이스** | MySQL, PostgreSQL, MongoDB, Neo4j, SQLAlchemy |
+| **데이터베이스** | MySQL, PostgreSQL, MongoDB, Neo4j, Redis, SQLAlchemy |
 | **DevOps** | Jenkins, TeamCity, Git, Docker |
 | **데스크톱** | WPF, Electron |
 
@@ -88,6 +88,29 @@
 
 ### 개인 프로젝트
 
+#### Auto-Trader - AI 기반 알고리즘 트레이딩 플랫폼
+> 딥러닝 기반 프로덕션급 알고리즘 트레이딩 시스템
+
+- **개요:** 6개의 AI 모델(Transformer, MLP, SSM, GNN, Multimodal), 실시간 데이터 파이프라인, 고성능 백테스팅 엔진을 통합한 트레이딩 플랫폼
+- **기술 스택:** FastAPI, React, PyTorch, PostgreSQL, Redis, WebSocket
+- **핵심 구현:**
+  - Kronos: Decoder-only Transformer 기반 주가 예측 (BSQ 토큰화로 22M+ 벡터 → 4,096 클러스터)
+  - TimeMixer/TimeMachine: ICLR 2025 SOTA MLP 및 Mamba SSM 기반 시계열 모델
+  - MambaLLM: 멀티모달 모델 (가격 + 뉴스 텍스트 Cross-Attention 융합)
+  - 이벤트 기반 백테스팅 엔진: 17+ 트레이딩 전략, Sharpe Ratio/Max Drawdown 자동 분석
+  - 실시간 데이터 파이프라인: KIS WebSocket, Redis Pub/Sub, 마이크로초 지연 브로드캐스트
+
+#### Codex Mobile - AI 코드 실행 모바일 플랫폼
+> Codex Core를 모바일에서 제어하는 크로스 플랫폼 실시간 애플리케이션
+
+- **개요:** 모바일에서 원격 서버의 Codex Core에 명령을 전달하고, SSE 기반 실시간 로그 스트리밍으로 결과를 확인하는 풀스택 시스템
+- **기술 스택:** Flutter, FastAPI, Docker
+- **핵심 구현:**
+  - SSE 기반 실시간 로그 스트리밍 (<100ms 지연)
+  - 에이전트 풀 관리: 레퍼런스 카운팅 기반 수명 관리, graceful shutdown
+  - 오프라인 명령 큐잉 및 재연결 시 자동 동기화
+  - Feature-First 모듈 아키텍처: Clean Architecture 기반 레이어 분리
+
 #### PlayDex - AI 게임 지식 어시스턴트
 > RAG 기반 게임 데이터 AI 챗봇 서비스
 
@@ -101,18 +124,6 @@
   - 증분 인덱싱 시스템 (MD5 해시 기반 변경 감지)
   - SSE 기반 실시간 스트리밍 채팅
 
-#### Jouriva - AI 여행 일정 자동 생성 플랫폼
-> LLM 기반 개인화 여행 일정 자동 생성 및 검증 시스템
-
-- **개요:** 사용자의 여행 조건을 입력받아 AI가 최적화된 일정을 생성하고, 자동 검증 파이프라인을 통해 품질을 보장하는 풀스택 웹 애플리케이션
-- **기술 스택:** FastAPI, React, TypeScript, SQLAlchemy (Async), OpenAI API, Leaflet
-- **핵심 구현:**
-  - 멀티 스테이지 LLM 파이프라인: 생성 → 검증 → 피드백 루프 → 웹 번들 생성
-  - 자동 검증 시스템: 안전성, 일정 밀도, 교통 연계성 다차원 검사
-  - 체크포인트 복구 시스템: LLM 실패 시 중간 상태 저장 및 비용 최적화
-  - Git 스타일 버전 관리: 일정 버전 브랜칭 및 스냅샷
-  - SSE 기반 실시간 파이프라인 진행 상황 스트리밍
-
 #### 온톨로지 파이프라인 - 디지털 트윈 지식 그래프 플랫폼
 > Palantir Foundry 스타일의 시맨틱 지식 그래프 데이터 파이프라인
 
@@ -125,28 +136,17 @@
   - 증거 중심 아키텍처: 모든 사실의 출처 및 데이터 계보 추적
   - SHACL 검증 및 LinkML 기반 온톨로지 스키마 관리
 
-#### YAWAWE-Clipper - 소셜 미디어 클리핑 관리 봇
-> Discord 기반 멀티 플랫폼 콘텐츠 클리핑 팀 관리 도구
+#### Jouriva - AI 여행 일정 자동 생성 플랫폼
+> LLM 기반 개인화 여행 일정 자동 생성 및 검증 시스템
 
-- **개요:** Instagram, TikTok, YouTube 플랫폼의 계정 인증, 클립 조회수 추적, 성과 기반 정산을 자동화하는 Discord 봇
-- **기술 스택:** TypeScript, Node.js, Discord.js, MongoDB, Docker
+- **개요:** 사용자의 여행 조건을 입력받아 AI가 최적화된 일정을 생성하고, 자동 검증 파이프라인을 통해 품질을 보장하는 풀스택 웹 애플리케이션
+- **기술 스택:** FastAPI, React, TypeScript, SQLAlchemy (Async), OpenAI API, Leaflet
 - **핵심 구현:**
-  - 멀티 플랫폼 계정 인증 시스템 (고유 코드 기반 자동 검증)
-  - Instagram GraphQL API 역엔지니어링 기반 스크래퍼 (2025 최신)
-  - 계층적 권한 시스템 (Bot Owner → Server Admin → Clipping Admin → Clipper)
-  - 동시성 제어를 위한 Review Lock 시스템
-  - 자동 수익 정산 및 조회수 추적
-
-#### AI 기반 YouTube 영상 분석 플랫폼
-> LLM을 활용한 YouTube 영상 분석 및 요약 웹 애플리케이션
-
-- **개요:** LLM을 활용하여 YouTube 영상을 분석, 전사 및 요약
-- **기술 스택:** Next.js, React, Node.js, Express, Socket.io, MongoDB, OpenAI API
-- **핵심 구현:**
-  - 대용량 오디오 자동 분할 및 병렬 처리
-  - Socket.io를 통한 실시간 진행 상황 스트리밍
-  - 서버 사이드 캐싱으로 응답 시간 최적화
-  - 멀티 AI 모델 아키텍처 구현
+  - 멀티 스테이지 LLM 파이프라인: 생성 → 검증 → 피드백 루프 → 웹 번들 생성
+  - 자동 검증 시스템: 안전성, 일정 밀도, 교통 연계성 다차원 검사
+  - 체크포인트 복구 시스템: LLM 실패 시 중간 상태 저장 및 비용 최적화
+  - Git 스타일 버전 관리: 일정 버전 브랜칭 및 스냅샷
+  - SSE 기반 실시간 파이프라인 진행 상황 스트리밍
 
 #### Stick-it - 디지털 포스트잇 노트 서비스
 > 태블릿 드로잉 앱 + 실시간 디스플레이 + 관리자 콘솔을 연결하는 풀스택 실시간 애플리케이션
@@ -159,6 +159,29 @@
   - Clean Architecture 적용 (Flutter 3-layer 분리)
   - TanStack React Query 기반 서버 상태 관리
   - SQLAlchemy 비동기 ORM 및 트랜잭션 자동 관리
+
+#### AI 기반 YouTube 영상 분석 플랫폼
+> LLM을 활용한 YouTube 영상 분석 및 요약 웹 애플리케이션
+
+- **개요:** LLM을 활용하여 YouTube 영상을 분석, 전사 및 요약
+- **기술 스택:** Next.js, React, Node.js, Express, Socket.io, MongoDB, OpenAI API
+- **핵심 구현:**
+  - 대용량 오디오 자동 분할 및 병렬 처리
+  - Socket.io를 통한 실시간 진행 상황 스트리밍
+  - 서버 사이드 캐싱으로 응답 시간 최적화
+  - 멀티 AI 모델 아키텍처 구현
+
+#### YAWAWE-Clipper - 소셜 미디어 클리핑 관리 봇
+> Discord 기반 멀티 플랫폼 콘텐츠 클리핑 팀 관리 도구
+
+- **개요:** Instagram, TikTok, YouTube 플랫폼의 계정 인증, 클립 조회수 추적, 성과 기반 정산을 자동화하는 Discord 봇
+- **기술 스택:** TypeScript, Node.js, Discord.js, MongoDB, Docker
+- **핵심 구현:**
+  - 멀티 플랫폼 계정 인증 시스템 (고유 코드 기반 자동 검증)
+  - Instagram GraphQL API 역엔지니어링 기반 스크래퍼 (2025 최신)
+  - 계층적 권한 시스템 (Bot Owner → Server Admin → Clipping Admin → Clipper)
+  - 동시성 제어를 위한 Review Lock 시스템
+  - 자동 수익 정산 및 조회수 추적
 
 ---
 
