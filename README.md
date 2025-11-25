@@ -33,7 +33,7 @@
 | **백엔드** | Node.js, Express, TypeScript, ASP.NET Core MVC, FastAPI, GraphQL, Discord.js, RESTful API |
 | **프론트엔드** | React, Flutter |
 | **AI/ML** | PyTorch (시계열 모델), LangChain, RAG, FAISS |
-| **데이터베이스** | MySQL, PostgreSQL, MongoDB, Neo4j, Redis, SQLAlchemy |
+| **데이터베이스** | MySQL, PostgreSQL, MongoDB, Neo4j, Redis |
 | **DevOps** | Jenkins, TeamCity, Git, Docker |
 | **데스크톱** | WPF, Electron |
 
@@ -140,13 +140,25 @@
 > LLM 기반 개인화 여행 일정 자동 생성 및 검증 시스템
 
 - **개요:** 사용자의 여행 조건을 입력받아 AI가 최적화된 일정을 생성하고, 자동 검증 파이프라인을 통해 품질을 보장하는 풀스택 웹 애플리케이션
-- **기술 스택:** FastAPI, React, TypeScript, SQLAlchemy (Async), OpenAI API, Leaflet
+- **기술 스택:** FastAPI, React, TypeScript, PostgreSQL, OpenAI API, Leaflet
 - **핵심 구현:**
   - 멀티 스테이지 LLM 파이프라인: 생성 → 검증 → 피드백 루프 → 웹 번들 생성
   - 자동 검증 시스템: 안전성, 일정 밀도, 교통 연계성 다차원 검사
   - 체크포인트 복구 시스템: LLM 실패 시 중간 상태 저장 및 비용 최적화
   - Git 스타일 버전 관리: 일정 버전 브랜칭 및 스냅샷
   - SSE 기반 실시간 파이프라인 진행 상황 스트리밍
+
+#### Dayfolio - 기업용 근태·연차 관리 시스템
+> Next.js 15 기반 근태관리 및 연차관리 웹 애플리케이션
+
+- **개요:** 복잡한 비즈니스 로직(연차 자동 부여, 타임존 기반 출퇴근 관리)을 처리하며, JWT 기반 인증과 역할 기반 접근 제어를 구현한 풀스택 시스템
+- **기술 스택:** Next.js 15, React 19, TypeScript, PostgreSQL, Docker
+- **핵심 구현:**
+  - 비트마스크 기반 연차 충돌 감지: 중복 신청 방지, 반차/반반차 조합 허용
+  - 트랜잭션 기반 출퇴근 처리: 미퇴근 기록 자동 상태 변경
+  - JWT 인증 + HTTP-only 쿠키 (XSS 방지), 역할 기반 접근 제어
+  - 11개 전략적 DB 인덱스 설계, 슬로우 쿼리 로깅 (500ms 기준)
+  - Docker 멀티 스테이지 빌드: 개발/QA/프로덕션 분리
 
 #### Stick-it - 디지털 포스트잇 노트 서비스
 > 태블릿 드로잉 앱 + 실시간 디스플레이 + 관리자 콘솔을 연결하는 풀스택 실시간 애플리케이션
@@ -158,7 +170,6 @@
   - 오프라인 우선 아키텍처: 네트워크 미연결 시 로컬 저장 후 자동 동기화
   - Clean Architecture 적용 (Flutter 3-layer 분리)
   - TanStack React Query 기반 서버 상태 관리
-  - SQLAlchemy 비동기 ORM 및 트랜잭션 자동 관리
 
 #### AI 기반 YouTube 영상 분석 플랫폼
 > LLM을 활용한 YouTube 영상 분석 및 요약 웹 애플리케이션
